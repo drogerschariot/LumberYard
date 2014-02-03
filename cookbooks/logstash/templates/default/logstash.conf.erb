@@ -1,0 +1,17 @@
+input {
+  redis {
+    host => "<%= @redis_ip -%>"
+    type => "redis-input"
+    data_type => "list"
+    key => "logstash"
+  }
+}
+
+filter {
+}
+
+output {
+  elasticsearch { 
+    embedded => true
+  }
+}

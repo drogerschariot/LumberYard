@@ -1,0 +1,58 @@
+[beaver]
+logstash_version: 1
+transport: redis
+redis_url: redis://<%= node['beaver']['redis_ip'] %>:6379/0 
+redis_namespace: logstash
+
+[/var/log/syslog]
+type: syslog
+tags: syslog
+
+[/var/log/auth.log]
+type: syslog
+tags: auth
+
+[<%= node['beaver']['log_dir'] %>/beaver.log]
+type: beaver
+tags: beaver
+
+[<%= node['beaver']['postfix_mail'] %>]
+type: postfix
+tags: postfix_mail
+
+[<%= node['beaver']['postfix_err'] %>]
+type: postfix
+tags: postfix_err
+
+[<%= node['beaver']['chef_path'] %>]
+type: chef
+tags: chef_client
+
+[<%= node['beaver']['postgres_path'] %>]
+type: postgres
+tags: postgres
+multiline_regex_before = ^sh:+
+
+[<%= node['beaver']['kibana_access_path'] %>]
+type: kibana
+tags: kibana_access
+
+[<%= node['beaver']['kibana_error_path'] %>]
+type: kibana
+tags: kibana_error
+
+[<%= node['beaver']['apache_ssl_access'] %>]
+type: apache
+tags: apache_access
+
+[<%= node['beaver']['apache_ssl_error'] %>]
+type: apache
+tags: apache_error
+
+[<%= node['beaver']['apache_access_path'] %>]
+type: apache
+tags: apache_access
+
+[<%= node['beaver']['apache_error_path'] %>]
+type: apache
+tags: apache_error

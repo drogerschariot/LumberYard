@@ -1,0 +1,55 @@
+# Puppetry 
+#
+# If you want to remove a client, simply comment out the define block.
+
+Vagrant.configure("2") do |config|
+
+   config.vm.define :vmbox do |vmbox|
+        vmbox.vm.box          = "ubuntu-server-12.04.2"
+        vmbox.vm.box_url      = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box"
+        vmbox.vm.hostname     = "logstash"
+        vmbox.vm.network :private_network, ip: "192.168.100.101"
+	      vmbox.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 22101
+        vmbox.vm.network :forwarded_port, id: 'nginx', guest: 80, host: 8080
+
+        vmbox.vm.provision "chef_solo" do |chef|
+          chef.cookbooks_path = [ "~/projects/haydle-chef/vendor/cookbooks", "~/projects/haydle-chef/cookbooks" ]
+          chef.add_recipe "apt"
+          chef.add_recipe "java"
+          chef.add_recipe "nginx"
+          chef.add_recipe "logstash"
+          chef.add_recipe "logstash::elasticsearch"
+          chef.add_recipe "logstash::kibana"
+      end
+   end
+
+   config.vm.define :redis do |redis|
+        redis.vm.box          = "ubuntu-server-12.04.2"
+        redis.vm.box_url      = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box"
+        redis.vm.hostname     = "redis"
+        redis.vm.network :private_network, ip: "192.168.100.102"
+        redis.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 22102
+
+        redis.vm.provision "chef_solo" do |chef|
+          chef.cookbooks_path = [ "~/projects/haydle-chef/vendor/cookbooks", "~/projects/haydle-chef/cookbooks" ]
+          chef.add_recipe "apt"
+          chef.add_recipe "redis::install_from_package"
+      end
+   end
+
+   config.vm.define :client do |client|
+        client.vm.box          = "ubuntu-server-12.04.2"
+        client.vm.box_url      = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box"
+        client.vm.hostname     = "client"
+        client.vm.network :private_network, ip: "192.168.100.103"
+        client.vm.network :forwarded_port, id: 'ssh', guest: 22, host: 22103
+
+        client.vm.provision "chef_solo" do |chef|
+          chef.cookbooks_path = [ "~/projects/haydle-chef/vendor/cookbooks", "~/projects/haydle-chef/cookbooks" ]
+          chef.add_recipe "apt"
+          chef.add_recipe "python"
+          chef.add_recipe "beaver"
+      end
+   end
+end
+

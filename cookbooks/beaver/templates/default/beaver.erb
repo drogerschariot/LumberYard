@@ -1,0 +1,20 @@
+description "Beaver"
+author "Chef"
+
+start on (filesystem and net-device-up)
+stop on runlevel [!2345]
+
+respawn
+respawn limit 5 30
+
+setuid root
+
+chdir <%= node['beaver']['base_dir'] %>
+
+console output
+
+exec beaver -c <%= node['beaver']['config_dir'] %>/beaver.conf -F json --logfile <%= node['beaver']['log_dir'] %>/beaver.log --pid <%= node['beaver']['pid_dir'] %>/beaver.pid
+
+emits beaver-running
+
+logstash_verion: 1

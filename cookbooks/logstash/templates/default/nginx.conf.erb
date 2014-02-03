@@ -1,0 +1,13 @@
+server {
+  listen   8088;
+  server_name  <%= node['hostname'] %>;
+
+  access_log  /var/log/nginx/kibana.access.log;
+  error_log  /var/log/nginx/kibana.error.log;
+
+  location / {
+    root   <%= node['logstash']['kibana']['http_path'] %>;
+    index  index.html index.htm;
+  }
+
+}

@@ -1,0 +1,5 @@
+default['logstash']['kibana']['http_path'] = "/var/www/nginx-default/kibana"
+default['logstash']['kibana']['source_url'] = "http://download.elasticsearch.org/kibana/kibana/kibana-latest.zip"
+default['logstash']['kibana']['es_ip'] =  "localhost"
+default['logstash']['kibana']['es_port'] = "8088"
+default['logstash']['kibana']['nginx_group'] =  "nginx"
