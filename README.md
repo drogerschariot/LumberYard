@@ -11,7 +11,7 @@ LumberYard creates a Logstash test environment is minutes using vagrant.
 
 ###Usage
 
-When your testing environment starts, you will have a Logstash server with an Elasticsearch DB, a Redis broker, and Kibana for your frontend. To test log events, simply send logs to the Redis broker via <your_computer_IP>:6379 and view them in Kibana http://localhost:8088
+When your testing environment starts, you will have a Logstash server with an Elasticsearch DB, a Redis broker, and Kibana for your frontend. To test log events, simply send logs to the Redis broker via \<your_computer_IP\>:6379 and view them in Kibana http://localhost:8088
 
 
 ###Contrib
