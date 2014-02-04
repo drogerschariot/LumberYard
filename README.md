@@ -1,7 +1,7 @@
 LumberYard
 ==========
 
-LumberYard creates a Logstash test environment is minutes using vagrant.
+LumberYard creates a Logstash test environment in minutes using vagrant.
 
 ###Install
 - git clone git@github.com:drogerschariot/LumberYard.git
